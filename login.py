@@ -49,7 +49,7 @@ class WebTest(unittest.TestCase):
         self.assertTrue(result)
     def test02(self):
         print("Current Run:test02")
-        self.login("Angus","zy860921")
+        self.login("Angus","xxxxxx")
         result = self.is_login_success()
         self.assertTrue(result)
 if __name__ == '__main__':
