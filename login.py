@@ -16,6 +16,7 @@ class WebTest(unittest.TestCase):
         driver.implicitly_wait(10)
         driver.find_element_by_xpath("//div[@id='ember804']//button[.='登录']").click()
         driver.find_element_by_id("login-account-name").send_keys(username)
+        driver.find_element_by_xpath(".//*[@id='login-account-password']").clear()
         driver.find_element_by_xpath(".//*[@id='login-account-password']").send_keys(passwd)
         driver.find_element_by_xpath("//div[@class='modal-footer']/button[1]").click()
 
@@ -52,5 +53,7 @@ class WebTest(unittest.TestCase):
         self.login("Angus","xxxxxx")
         result = self.is_login_success()
         self.assertTrue(result)
+
+
 if __name__ == '__main__':
     unittest.main()
