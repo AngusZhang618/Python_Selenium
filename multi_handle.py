@@ -14,7 +14,7 @@ s = driver.find_elements_by_css_selector(".govsite-link.g-ib")
 for i in range(len(s)):
     print(s[i].get_attribute("href"),s[i].text)
     s[i].click()
-
+time.sleep(5)
 all_h = driver.window_handles
 print(all_h,len(all_h))
 for i in all_h:
