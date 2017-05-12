@@ -74,6 +74,7 @@ class WebTest(unittest.TestCase):
         for i in l:
             self.login(i[0],i[1])
             result = self.is_login_success()
+            if i[0] =='angus':
                 self.assertTrue(result)
             else:
                 self.assertFalse(result)
