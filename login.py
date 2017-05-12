@@ -43,16 +43,40 @@ class WebTest(unittest.TestCase):
     def tearDown(self):
         self.driver.quit()
 
+    def readText(self):
+        path = 'E:\\WorkSpace\\1.txt'
+        file = open(path)
+        lines = file.readlines()
+        account = []
+        for i in lines:
+            l = i.strip().split('|')
+            account.append(l)
+        return account
+        file.close()
+
+
     def test01(self):
         print("Current Run:test01")
         self.login("hello","world")
         result = self.is_login_success()
-        self.assertTrue(result)
+        # self.assertTrue(result)
+        self.assertFalse(result)
     def test02(self):
         print("Current Run:test02")
         self.login("Angus","xxxxxx")
         result = self.is_login_success()
-        self.assertTrue(result)
+        # self.assertTrue(result)
+        self.assertFalse(result)
+
+    def testLogin(self):
+        print("Current Run:testLogin")
+        l = self.readText()
+        for i in l:
+            self.login(i[0],i[1])
+            result = self.is_login_success()
+                self.assertTrue(result)
+            else:
+                self.assertFalse(result)
 
 
 if __name__ == '__main__':
