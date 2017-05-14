@@ -6,7 +6,7 @@ import email
 s = IMAP4('imap.qq.com')
 s.login('275764611@qq.com','nphmypjzmzllbhjf')
 s.select('INBOX',True)
-typ, data = s.search(None,'SEEN')
+typ, data = s.search(None,'UNSEEN')
 print(data)
 t = 0
 for num in (str(data[0])).split():
