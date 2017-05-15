@@ -5,8 +5,26 @@ import time
 from selenium import webdriver
 
 class AutoLogin():
-    def setUp(self):
-        self.driver = webdriver.Firefox()
+
+
+    def getAccount(self):
+        filePath = 'D:\\WorkSpace\\Python_Selenium\\1.txt'
+        file = open(filePath)
+        lines = file.readlines()
+        account = []
+        for i in lines:
+            l = i.strip().split('|')
+            account.append(l)
+        return account
+        file.close()
+
+    def findUser(self,user):
+        account = self.getAccount()
+        for i in account:
+            if i[0].startswith(user):
+                return i
+        # return l
+
 
     def getAuthCode(self,imagePara):
         if os.path.exists(imagePara):
@@ -21,38 +39,40 @@ class AutoLogin():
             print("No image under this folder")
             return False
 
-    def login(self, username, passwd):
-        u"""登录方法，账号密码参数化"""
-        driver = self.driver
-        path = ''
-        driver.get(path)
-        driver.implicitly_wait(10)
-        driver.find_element_by_xpath("").click()
-        driver.find_element_by_id("").send_keys(username)
-        driver.find_element_by_xpath("").clear()
-        driver.find_element_by_xpath("").send_keys(passwd)
-        driver.find_element_by_xpath("").click()
 
-    def readText(self):
-        path = ''
-        file = open(path)
-        lines = file.readlines()
-        account = []
-        for i in lines:
-            l = i.strip().split('|')
-            account.append(l)
-        return account
-        file.close()
+if __name__ == '__main__':
+    auto = AutoLogin()
+    authCodePath = 'D:\\WorkSpace\\Python_Selenium\\1.jpg'
 
-    def is_login_success(self):
-        u"""判断是否登录成功"""
-        try:
-            time.sleep(10)
-            text = self.driver.find_element_by_xpath("").get_attribute("title")
-            print(u"登录成功！")
-            print(u"当前登录用户：",text)
-            return True
-        except Exception as e:
-            print(u"登录失败！")
-            print(e)
-            return False
+    driver = webdriver.Firefox()
+    path = 'https://www.walkiemate.com/hr_communication/login.jsp'
+    driver.get(path)
+    driver.implicitly_wait(10)
+
+    account = auto.findUser("angus")
+    print(account)
+    username = account[0]
+    passwd = account[1]
+    driver.find_element_by_xpath(".//*[@id='username']").clear()
+    driver.find_element_by_xpath(".//*[@id='username']").send_keys(username)
+    driver.find_element_by_xpath(".//*[@id='password']").clear()
+    driver.find_element_by_xpath(".//*[@id='password']").send_keys(passwd)
+    driver.find_element_by_xpath(".//*[@id='checkCode']").screenshot("1.jpg")
+    authCode = auto.getAuthCode(authCodePath)
+    #input the auth code
+    driver.find_element_by_xpath(".//*[@id='checkValid']").clear()
+    driver.find_element_by_xpath(".//*[@id='checkValid']").send_keys(authCode)
+    driver.find_element_by_xpath(".//*[@id='login']/div[7]").click()
+    driver.implicitly_wait(20)
+    if driver.find_element_by_css_selector("#personImg").is_displayed():
+        text = driver.find_element_by_xpath(".//*[@id='person_Div']/div/div[2]").get_attribute("innerHTML")
+        print("当前登录用户：",text.strip())
+    else:
+        text = driver.find_element_by_xpath("html/body/div[3]/span").text
+        print(text)
+    time.sleep(3)
+    driver.find_element_by_xpath(".//*[@id='checkDivId']").click()
+    driver.implicitly_wait(20)
+    text = driver.find_element_by_xpath("html/body/div[11]/div[2]/div[1]").get_attribute("innerHTML")
+    print(text)
+    driver.quit()
