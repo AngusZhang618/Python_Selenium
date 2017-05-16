@@ -4,24 +4,10 @@ import poplib
 import email
 from email import parser
 import string
-from imaplib import IMAP4
-import email
-import os
-
-username = '275764611'
-password = 'nphmypjzmzllbhjf'
-def getUnseenmail():
-    s = IMAP4('imap.qq.com')
-    s.login(username,password)
-    s.select('INBOX',True)
-    typ, data = s.search(None,'UNSEEN')
-    print(data)
-    s.close()
-    s.logout()
-    return data
-
 
 host = 'pop.qq.com'
+username = '275764611'
+password = 'nphmypjzmzllbhjf'
 
 pop_conn = poplib.POP3_SSL(host)
 pop_conn.user(username)
@@ -30,6 +16,7 @@ pop_conn.pass_(password)
 #Get messages from server:
 messages = [pop_conn.retr(i) for i in range(1, len(pop_conn.list()[1]) + 1)]
 # Concat message pieces:
+<<<<<<< HEAD
 
 unseenmail = getUnseenmail()
 unseenmail = str(unseenmail[0].decode()).split(' ')
@@ -49,10 +36,21 @@ for i in unseenmail:
         file.write(lines)
         file.close()
         print('finished!')
+=======
+# messages = ["\n".join(mssg[1]) for mssg in messages]
+mail = []
+for mssg in messages:
+    print('*'*50)
+    print(messages.index(mssg))
+    for imssg in mssg[1]:
+>>>>>>> parent of 9e3b7ce... new file:   %d.eml'%int(i)
         # print(type(imssg))
         # imssg.decode('unicode_escape')
         # messages.append("\n".join(imssg))
-        # print(imssg.decode())
+        print(imssg.decode())
+        mail.append(imssg)
+    print(messages.index(mssg))
+    print("*"*50)
 # print(messages)
 
 #Parse message intom an email object:
