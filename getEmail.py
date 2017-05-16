@@ -7,7 +7,7 @@ import os
 
 def getUnseenemail():
     s = IMAP4('imap.qq.com')
-    s.login('275764611@qq.com', 'nphmypjzmzllbhjf')
+    s.login('xxx@qq.com', 'xxxx')
     s.select('INBOX', True)
     typ, data = s.search(None, 'UNSEEN')
     return data
@@ -15,8 +15,8 @@ def getUnseenemail():
     s.logout()
 
 host = 'pop.qq.com'
-username = '275764611'
-password = 'nphmypjzmzllbhjf'
+username = 'qq'
+password = 'xxxx'
 
 def getMessages():
     pop_conn = poplib.POP3_SSL(host)
@@ -117,7 +117,7 @@ def empty_obj():
 
 
 uid = []
-path ="E:\\WorkSpace\\Python_Selenium\\2.eml"
+path ="E:\\WorkSpace\\2.eml"
 while True:
     unseenmail = getUnseenemail()
     unseenmail = str(unseenmail[0].decode()).split(' ')
