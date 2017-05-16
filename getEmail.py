@@ -121,26 +121,24 @@ path ="E:\\WorkSpace\\2.eml"
 while True:
     unseenmail = getUnseenemail()
     unseenmail = str(unseenmail[0].decode()).split(' ')
+    notDealedMail = set(unseenmail).difference(set(uid))
     if set(unseenmail).issubset(set(uid)):
         pass
     else:
         messages = getMessages()
-        for i in unseenmail:
-            if i in uid:
-                pass
-            else:
-                lines = messages[unseenmail.index(i)][1]
-                print(unseenmail.index(i))
-                file = open(path, 'w')
-                for line in lines:
-                    file.write(line.decode()+'\n')
-                file.close()
-                #readEmail
-                msg = get_message(path)
-                # print(msg)
-                print('#' * 50)
-                print('subject:{}'.format(get_subject(path)))
-                print('#' * 50)
-                print('from:{}'.format(get_from(msg)))
-                print('to:{}'.format(get_to(msg)))
-                uid.append(i)
+        for i in notDealedMail:
+            lines = messages[unseenmail.index(i)][1]
+            print(unseenmail.index(i))
+            file = open(path, 'w')
+            for line in lines:
+                file.write(line.decode()+'\n')
+            file.close()
+            #readEmail
+            msg = get_message(path)
+            # print(msg)
+            print('#' * 50)
+            print('subject:{}'.format(get_subject(path)))
+            print('#' * 50)
+            print('from:{}'.format(get_from(msg)))
+            print('to:{}'.format(get_to(msg)))
+            uid.append(i)
