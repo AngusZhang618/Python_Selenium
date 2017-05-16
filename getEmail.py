@@ -18,11 +18,12 @@ host = 'pop.qq.com'
 username = '275764611'
 password = 'nphmypjzmzllbhjf'
 
-def getMessages():
+def getMessages(data):
     pop_conn = poplib.POP3_SSL(host)
     pop_conn.user(username)
     pop_conn.pass_(password)
-    messages = [pop_conn.retr(int(i)) for i in unseenmail]
+
+    messages = [pop_conn.retr(int(i)) for i in data]
     return messages
 
 #Read file
@@ -124,7 +125,7 @@ while True:
     if set(unseenmail).issubset(set(uid)):
         pass
     else:
-        messages = getMessages()
+        messages = getMessages(unseenmail)
         for i in unseenmail:
             if i in uid:
                 pass
