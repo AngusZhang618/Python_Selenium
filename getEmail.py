@@ -18,11 +18,11 @@ host = 'pop.qq.com'
 username = 'qq'
 password = 'xxxx'
 
-def getMessages():
+def getMessages(data):
     pop_conn = poplib.POP3_SSL(host)
     pop_conn.user(username)
     pop_conn.pass_(password)
-    messages = [pop_conn.retr(int(i)) for i in unseenmail]
+    messages = [pop_conn.retr(int(i)) for i in data]
     return messages
 
 #Read file
@@ -120,25 +120,24 @@ uid = []
 path ="E:\\WorkSpace\\2.eml"
 while True:
     unseenmail = getUnseenemail()
-    unseenmail = str(unseenmail[0].decode()).split(' ')
-    notDealedMail = set(unseenmail).difference(set(uid))
-    if set(unseenmail).issubset(set(uid)):
-        pass
-    else:
-        messages = getMessages()
-        for i in notDealedMail:
-            lines = messages[unseenmail.index(i)][1]
-            print(unseenmail.index(i))
-            file = open(path, 'w')
-            for line in lines:
-                file.write(line.decode()+'\n')
-            file.close()
-            #readEmail
-            msg = get_message(path)
-            # print(msg)
-            print('#' * 50)
-            print('subject:{}'.format(get_subject(path)))
-            print('#' * 50)
-            print('from:{}'.format(get_from(msg)))
-            print('to:{}'.format(get_to(msg)))
-            uid.append(i)
+    while len(unseenmail)>0:
+        unseenmail = str(unseenmail[0].decode()).split(' ')
+        notDealedMail = set(unseenmail).difference(set(uid))
+        while len(notDealedMail)>0:
+            messages = getMessages(unseenmail)
+            for i in notDealedMail:
+                lines = messages[unseenmail.index(i)][1]
+                print(unseenmail.index(i))
+                file = open(path, 'w')
+                for line in lines:
+                    file.write(line.decode()+'\n')
+                file.close()
+                #readEmail
+                msg = get_message(path)
+                # print(msg)
+                print('#' * 50)
+                print('subject:{}'.format(get_subject(path)))
+                print('#' * 50)
+                print('from:{}'.format(get_from(msg)))
+                print('to:{}'.format(get_to(msg)))
+                uid.append(i)
