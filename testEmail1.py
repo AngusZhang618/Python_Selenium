@@ -41,14 +41,14 @@ print(messages[13])
 for i in unseenmail:
     lines = messages[int(i)-1][1]
     for i in lines:
-        os.system('type > NUL > %d.eml'%int(i))
-        path = os.getcwd() + "\\" + "%d.eml'%int(i)"
-        print(path)
-        file = open(path,'a')
-        print('Open the file')
-        file.write(lines)
-        file.close()
-        print('finished!')
+    os.system('type > NUL > %d.eml'%int(i))
+    path = os.getcwd() + "\\" + "%d.eml'%int(i)"
+    print(path)
+    file = open(path,'a')
+    print('Open the file')
+    file.write(lines)
+    file.close()
+    print('finished!')
         # print(type(imssg))
         # imssg.decode('unicode_escape')
         # messages.append("\n".join(imssg))
