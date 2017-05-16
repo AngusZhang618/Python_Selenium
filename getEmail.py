@@ -10,9 +10,9 @@ def getUnseenemail():
     s.login('275764611@qq.com', 'nphmypjzmzllbhjf')
     s.select('INBOX', True)
     typ, data = s.search(None, 'UNSEEN')
-    return data
     s.close()
     s.logout()
+    return data
 
 host = 'pop.qq.com'
 username = '275764611'
@@ -22,7 +22,6 @@ def getMessages(data):
     pop_conn = poplib.POP3_SSL(host)
     pop_conn.user(username)
     pop_conn.pass_(password)
-
     messages = [pop_conn.retr(int(i)) for i in data]
     return messages
 
@@ -118,18 +117,17 @@ def empty_obj():
 
 
 uid = []
-path ="E:\\WorkSpace\\Python_Selenium\\2.eml"
+path ="E:\\WorkSpace\\2.eml"
 while True:
     unseenmail = getUnseenemail()
     unseenmail = str(unseenmail[0].decode()).split(' ')
-    if set(unseenmail).issubset(set(uid)):
-        pass
-    else:
-        messages = getMessages(unseenmail)
-        for i in unseenmail:
-            if i in uid:
-                pass
-            else:
+    if unseenmail != ['']:
+        notDealedMail = set(unseenmail).difference(set(uid))
+        mailcount = list(notDealedMail)
+        mailcount.sort()
+        if len(notDealedMail)>0:
+            messages = getMessages(unseenmail)
+            for i in notDealedMail:
                 lines = messages[unseenmail.index(i)][1]
                 print(unseenmail.index(i))
                 file = open(path, 'w')
