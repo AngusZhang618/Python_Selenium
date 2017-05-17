@@ -7,7 +7,7 @@ import os
 
 def getUnseenemail():
     s = IMAP4('imap.qq.com')
-    s.login('275764611@qq.com', 'nphmypjzmzllbhjf')
+    s.login('1234567@qq.com', 'xxxxxxx')
     s.select('INBOX', True)
     typ, data = s.search(None, 'UNSEEN')
     s.close()
@@ -15,8 +15,8 @@ def getUnseenemail():
     return data
 
 host = 'pop.qq.com'
-username = '275764611'
-password = 'nphmypjzmzllbhjf'
+username = '1234567'
+password = 'xxxxxxx'
 
 def getMessages(data):
     pop_conn = poplib.POP3_SSL(host)
